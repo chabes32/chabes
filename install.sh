@@ -71,12 +71,12 @@ fi
 echo "-------------------------------------------------------"
 echo "Detecting latest TeamSpeak 3 version, please wait..."
 echo "-------------------------------------------------------"
-wget 'http://files.teamspeak-services.com/releases/server/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > TS3V
+wget 'http://dl.4players.de/ts/releases/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > TS3V
 while read ts3version; do
-  if [[ "${ts3version}" =~ ^[3-9]+\.[0-20]+\.1[2-20]+\.?[0-20]*$ ]]; then
-    wget --spider -q http://files.teamspeak-services.com/releases/server/${ts3version}/teamspeak3-server_linux_amd64-${ts3version}.tar.bz2
+  if [[ "${ts3version}" =~ ^[3-9]+\.[0-9]+\.1[2-9]+\.?[0-9]*$ ]]; then
+    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux_amd64-${ts3version}.tar.bz2
   else
-    wget --spider -q http://files.teamspeak-services.com/releases/server/${ts3version}/teamspeak3-server_linux-amd64-${ts3version}.tar.gz
+    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux-amd64-${ts3version}.tar.gz
   fi
   if [[ $? == 0 ]]; then
     break
@@ -86,9 +86,9 @@ rm -f TS3V
 
 # Get OS Arch and download correct packages
 if [ "$(arch)" != 'x86_64' ]; then
-    wget "http://files.teamspeak-services.com/releases/server/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
+    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
 else
-    wget "http://files.teamspeak-services.com/releases/server/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
+    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
 fi
 
 # Install required packages
